@@ -6,13 +6,13 @@ import NotFound from "./pages/NotFound"
 function App() {
 
     return (
-        <HashRouter>
+        <Router>
             <Routes>
                 <Route path="/1" element={<Star />} />
                 <Route path="/2" element={<Camping />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
-        </HashRouter>
+        </Router>
     )
 }
 
