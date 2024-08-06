@@ -8,24 +8,23 @@ WORKDIR /usr/src/app
 COPY toto-fe/package.json toto-fe/package-lock.json ./
 RUN npm install
 
-# 소스 코드 복사 및 빌드 실행
-COPY toto-fe .  # 소스 코드 및 모든 파일 복사
-RUN npm run build  # Vite를 사용하여 프로덕션 빌드 실행
+# react-router-dom 설치
+RUN npm install react-router-dom
 
-# 2단계: 프로덕션 스테이지
+# 소스 코드 복사
+COPY toto-fe .  # 소스 코드 및 모든 파일 복사
+
+# 2단계: 개발 환경 스테이지
 FROM krmp-d2hub-idock.9rum.cc/goorm/node:16
 
 # 작업 디렉토리 설정
 WORKDIR /usr/src/app
 
-# 빌드된 정적 파일 복사
-COPY --from=build /usr/src/app/dist ./dist
-
-# 정적 파일 제공을 위한 serve 패키지 설치
-RUN npm install -g serve
+# 빌드된 소스 코드 복사
+COPY --from=build /usr/src/app ./
 
 # 포트 노출
-EXPOSE 3000
+EXPOSE 5173  # Vite의 기본 개발 서버 포트
 
-# 정적 파일 제공 명령 실행
-CMD ["serve", "-s", "dist"]
+# 개발 서버 실행 명령
+CMD ["npm", "run", "dev", "--", "--host"]
