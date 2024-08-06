@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # 프로젝트의 package.json 및 package-lock.json 파일을 복사
 COPY toto-fe/package*.json ./
 
-# 필요한 패키지 설치, react-router-dom 포함
+# 필요한 패키지 설치
 RUN npm install
 
 # 빌드 디렉토리 생성 및 빌드된 파일 복사
